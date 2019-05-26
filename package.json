@@ -1,0 +1,22 @@
+{
+  "name": "dbna",
+  "version": "0.1.3",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^3.0.0"
+  },
+  "dependencies": {
+    "copy-to-clipboard": "^3.0.8",
+    "electron-packager": "^13.0.1",
+    "js-sha256": "^0.9.0",
+    "jsonfile": "^5.0.0",
+    "opn": "^5.4.0"
+  }
+}

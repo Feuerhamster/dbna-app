@@ -1,0 +1,144 @@
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+<script>
+const {remote} =  require('electron');
+const json = require("jsonfile");
+var config = json.readFileSync(__dirname+'\\..\\config.json');
+
+function windowClose(){
+    var window = remote.getCurrentWindow();
+    window.close();
+}
+function windowMinimize(){
+    var window = remote.getCurrentWindow();
+    window.minimize();
+}
+
+function windowMaximize(){
+
+    var window = remote.getCurrentWindow();
+
+    if(window.isMaximized() == false){
+        window.maximize();
+        document.getElementById("maximize_button").innerHTML = '<i class="far fa-window-restore"></i>';
+    }else{
+        window.unmaximize();
+        document.getElementById("maximize_button").innerHTML = '<i class="far fa-square"></i>';
+    }
+}
+var win = remote.getCurrentWindow();
+win.setTitle("[Gesperrt]");
+</script>
+<style>
+body{
+    background: linear-gradient(45deg, #0cbcf1 0, #8a0ebd 100%);
+}
+.ui-titlebar{
+    background: none!important;
+}
+</style>
+
+
+<html>
+    <head>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="style.css" />
+
+        <div class="ui-titlebar">
+            <div class="ui-titletext">
+            </div>
+            <div class="ui-titlecontrols">
+                <button class="ui-btn minimize" onclick="windowMinimize();">
+                    <svg x="0px" y="0px" viewBox="0 0 10.2 1"><rect x="0" y="50%" width="10.2" height="1" /></svg>
+                </button><button class="ui-btn maximize" onclick="windowMaximize();">
+                    <svg viewBox="0 0 10 10"><path d="M0,0v10h10V0H0z M9,9H1V1h8V9z" /></svg>
+                </button><button class="ui-btn close" onclick="windowClose();">
+                    <svg viewBox="0 0 10 10"><polygon points="10.2,0.7 9.5,0 5.1,4.4 0.7,0 0,0.7 4.4,5.1 0,9.5 0.7,10.2 5.1,5.8 9.5,10.2 10.2,9.5 5.8,5.1" /></svg>
+                </button>
+            </div>
+        </div>
+
+    </head>
+    <body>
+
+        <center style="padding-top: 18%;">
+            <div class="panel" style="width: 40%">
+                <h1 style="margin-bottom: 5px;">Passwort erforderlich</h1>
+                <p>Die App wurde mit einem Passwort gesichert. Bitte gebe das richtige Passwort ein, um fortfahren zu können.</p>
+
+                <br/><div id="response"></div><br/>
+
+                <input id="pw" type="password" placeholder="Passwort" />
+                <button class="button" onclick="login()">Weiter</button>
+
+            </div>
+        </center>
+
+
+    </body>
+</html>
+
+<script>
+var input = document.getElementById("pw");
+input.focus();
+input.select();
+input.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        login();
+    }
+});
+
+var attemps = 3;
+function wrongPW(){
+
+       if(attemps == 0){
+
+              $.ajax({
+                      type: 'GET',
+                      url: 'https://www.dbna.com/json/user/logout',
+                      data: '',
+                      success: function(data){
+
+                            win.close();
+
+                      }
+              });
+
+       }else{
+              document.getElementById('pw').value=""
+              document.getElementById("response").innerHTML = '<span class="err-msg">Das Passwort ist falsch! Noch ['+attemps+'] Versuche.</span>';
+              attemps -=1;
+       }
+
+
+}
+
+
+function login(){
+
+    var thispw = document.getElementById("pw").value;
+
+    if(thispw != "" && thispw != " "){
+
+        var sha256 = require('js-sha256');
+
+        var hash = sha256.create();
+        hash.update(thispw);
+
+        thispw = hash.hex();
+
+        if(thispw == config.password){
+
+            window.location.href="index.html";
+
+        }else{
+              wrongPW();
+        }
+
+    }else{
+        document.getElementById("response").innerHTML = '<span class="err-msg">Bitte gebe ein Passwort an</span>';
+    }
+}
+</script>

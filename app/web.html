@@ -1,0 +1,100 @@
+<webview id="webview" allowpopups plugins disablewebsecurity>
+
+</webview>
+
+<script>
+var webviewelement = document.getElementById("webview");
+webviewelement.src = config.homepage;
+webview.addEventListener('did-finish-load', (e) => {
+    webviewelement.insertCSS(".topbar{box-shadow: 0px 0.6px 4px 1px rgba(50,50,50,0.3)!important;}.ad{display:none!important;}.ui.grid>.row{margin-top:10px!important;}.ui.attached.right.rail{display:none!important;}.ui.container.topbar .indicators .item{padding: 9px!important;}.ui.container.topbar .indicators{margin-right: 10px!important;}.ui.left.internal.rail, .ui.right.rail{display: none;}.ui.tiny.modal{margin:0!important}.ui.container.main, .ui.container.topbar{margin-right: 0px!important;width:100%}")
+});
+webview.addEventListener('did-navigate-in-page', (e) => {
+    var win = remote.getCurrentWindow();
+    var currentURL = e.url;
+
+    var splitted = currentURL.split("/");
+    var thisnav = splitted[3];
+
+    if(config.app_title == "default"){
+        if(splitted[3] == "start"){
+            setTimeout(function(){
+                win.setTitle("DBNA - Start");
+            }, 500);
+        }
+        if(splitted[3] == "profile"){
+            if(splitted[5] == "text"){
+                setTimeout(function(){
+                    win.setTitle("DBNA - Profil > Fragebögen");
+                }, 500);
+            }else if(splitted[5] == "photos"){
+                setTimeout(function(){
+                    win.setTitle("DBNA - Profil > Fotos");
+                }, 500);
+            }else if(splitted[5] == "friends"){
+                setTimeout(function(){
+                    win.setTitle("DBNA - Profil > Freunde");
+                }, 500);
+            }else if(splitted[5] == "groups"){
+                setTimeout(function(){
+                    win.setTitle("DBNA - Profil > Gruppen");
+                }, 500);
+            }else{
+                setTimeout(function(){
+                    win.setTitle("DBNA - Profil");
+                }, 500);
+            }
+        }
+        if(splitted[3] == "groups"){
+            setTimeout(function(){
+                win.setTitle("DBNA - Gruppen");
+            }, 500);
+        }
+        if(splitted[3] == "photos"){
+            setTimeout(function(){
+                win.setTitle("DBNA - Fotos");
+            }, 500);
+        }
+        if(splitted[3] == "guys"){
+            setTimeout(function(){
+                win.setTitle("DBNA - Jungs");
+            }, 500);
+        }
+        if(splitted[3] == "forum"){
+            if(splitted[6]){
+                setTimeout(function(){
+                    win.setTitle("DBNA - Forum > "+splitted[6]);
+                }, 500);
+            }else{
+                setTimeout(function(){
+                    win.setTitle("DBNA - Forum");
+                }, 500);
+            }
+
+        }
+        if(!splitted[3]){
+            window.location.href = "index.html";
+            document.getElementById("dbna_content").style.display = "none";
+        }
+    }else{
+        setTimeout(function(){
+            win.setTitle(conifg.app_title);
+        }, 1500);
+    }
+
+
+});
+
+</script>
+
+<script>
+if(config.msg.general == true){
+    jQuery.ajax({
+        url: "notify.js",
+        dataType: 'script',
+        success: function(){
+            console.log("notify.js loaded");
+        },
+        async: false
+    });
+}
+</script>
