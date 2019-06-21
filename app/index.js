@@ -4,6 +4,7 @@ const ccopy = require("copy-to-clipboard");
 var config = json.readFileSync(__dirname+'\\..\\config.json');
 var webviewelement = document.getElementById("webview");
 var statsdata = {set:false};
+window.loc = "test";
 
 function windowClose(){
     var window = remote.getCurrentWindow();

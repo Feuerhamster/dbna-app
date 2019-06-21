@@ -51,9 +51,45 @@
                 <input type="submit" class="button" value="Speichern" id="homesave" />
             </form>
     
-        </div>
+    </div>
     
+    <br/><br/>
+
+    <div class="panel">
+        <h2 style="margin-bottom: 20px">Dunkles Design</h2>
+        
+        <p>DBNA wird dir normalerweise mit hellen Farben angezeigt. Wenn du aber lieber dunklere Farben bevorzugst, kannst du das hier einstellen.</p>
         <br/><br/>
+        <form id="design_form">
+            <p style="display: inline-block"><label class="switch" style="float: left;">
+                <input type="checkbox" name="dark-mode" id="dark-mode">
+                <span class="slider round"></span>
+            </label><span style="float: left;margin-left: 10px;font-size: 18px;">Dunkles Design aktivieren</span></p><br/><br/>
+           
+            <input type="submit" class="button" value="Speichern" id="designsave" />
+        </form>
+
+    </div>
+
+    <br/><br/>
+
+    <div class="panel">
+        <h2 style="margin-bottom: 20px">Discord Rich Presence</h2>
+        
+        <p>Wenn du möchtest, das DBNA in Discord als deine Aktivität angezeigt wird, aktiviere diese Funktion</p>
+        <br/><br/>
+        <form id="rpc_form">
+            <p style="display: inline-block"><label class="switch" style="float: left;">
+                <input type="checkbox" name="rpc-switch" id="rpc-switch">
+                <span class="slider round"></span>
+            </label><span style="float: left;margin-left: 10px;font-size: 18px;">Rich Presence aktivieren</span></p><br/><br/>
+           
+            <input type="submit" class="button" value="Speichern" id="rpcsave" />
+        </form>
+
+    </div>
+
+    <br/><br/>
 
     <div class="panel">
         <h2 style="margin-bottom: 20px">Benachrichtigungen</h2>
@@ -97,6 +133,8 @@ document.getElementById('windowSettings').value = cfgdata.windowSettings;
 document.getElementById("general-notifications").checked = cfgdata.msg.general;
 document.getElementById("push-notifications").checked = cfgdata.msg.push;
 document.getElementById("chat-notifications").checked = cfgdata.msg.chat;
+document.getElementById("dark-mode").checked = cfgdata.darkMode;
+document.getElementById("rpc-switch").checked = cfgdata.rpc;
 
 $("#pwform").submit(function(event){
     event.preventDefault();
@@ -225,6 +263,46 @@ $("#home_form").submit(function(event){
         });
     }
     
+
+});
+
+$("#design_form").submit(function(event){
+    event.preventDefault();
+
+    var cfgdata = json.readFileSync(__dirname+'\\..\\config.json');
+
+    cfgdata.darkMode = document.getElementById("dark-mode").checked;
+
+    json.writeFile(__dirname+'\\..\\config.json',cfgdata,()=>{
+        
+        document.getElementById("designsave").classList.add("success");
+        document.getElementById("designsave").value = 'Gespeichert';
+        setTimeout(()=>{
+            document.getElementById("designsave").classList.remove("success");
+            document.getElementById("designsave").value = 'Speichern';
+        },2000);
+
+    });  
+
+});
+
+$("#rpc_form").submit(function(event){
+    event.preventDefault();
+
+    var cfgdata = json.readFileSync(__dirname+'\\..\\config.json');
+
+    cfgdata.rpc = document.getElementById("rpc-switch").checked;
+
+    json.writeFile(__dirname+'\\..\\config.json',cfgdata,()=>{
+        
+        document.getElementById("rpcsave").classList.add("success");
+        document.getElementById("rpcsave").value = 'Gespeichert';
+        setTimeout(()=>{
+            document.getElementById("rpcsave").classList.remove("success");
+            document.getElementById("rpcsave").value = 'Speichern';
+        },2000);
+
+    });  
 
 });
 

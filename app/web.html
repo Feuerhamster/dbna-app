@@ -7,13 +7,17 @@ var webviewelement = document.getElementById("webview");
 webviewelement.src = config.homepage;
 webview.addEventListener('did-finish-load', (e) => {
     webviewelement.insertCSS(".topbar{box-shadow: 0px 0.6px 4px 1px rgba(50,50,50,0.3)!important;}.ad{display:none!important;}.ui.grid>.row{margin-top:10px!important;}.ui.attached.right.rail{display:none!important;}.ui.container.topbar .indicators .item{padding: 9px!important;}.ui.container.topbar .indicators{margin-right: 10px!important;}.ui.left.internal.rail, .ui.right.rail{display: none;}.ui.tiny.modal{margin:0!important}.ui.container.main, .ui.container.topbar{margin-right: 0px!important;width:100%}")
+
+    if(config.darkMode){
+        webviewelement.insertCSS("body{background-color: #2f3840!important;color: white!important;}.sidebar aside .ui.borderless.vertical.navigation.menu{background-color: #2f3840!important}.ui.header{color: white!important}.sidebar aside .ui.vertical.menu .item a, .sidebar aside .ui.vertical.menu .item a:active, .sidebar aside .ui.vertical.menu .item a:hover, .sidebar aside .ui.vertical.menu .item a:visited{color: white!important}.sidebar aside{border-right: 1px solid #3d4751!important}.link, .link a{color: #b72bf1!important}.ui.secondary.pointing.menu .active.item, .ui.secondary.pointing.menu .active.item:hover{border-color: #b72bf1!important}.ui.secondary.pointing.menu .active.item span, .ui.secondary.pointing.menu .active.item:hover span{color: #b72bf1!important}i.grey.icon{color: white!important}.ui.secondary.pointing.menu .item span{color: white!important}.ui.segment, .ui.segments .segment{background-color: #3d4751!important}.ui.raised.card, .ui.raised.cards > .card{background-color: #3d4751!important;}.ui.card .meta, .ui.cards>.card .meta{color: white!important;}.ui.card .meta *, .ui.cards>.card .meta *{color: white!important;}.heartwrapper .heartcount{color: white!important}.ui.comments .comment .metadata{color: white!important;}.ui.comments .comment .text{color: white!important;}.ui.card>.content>.header, .ui.cards>.card>.content>.header{color: white!important;}.ui.form input:not([type]), .ui.form input[type=date], .ui.form input[type=datetime-local], .ui.form input[type=email], .ui.form input[type=file], .ui.form input[type=number], .ui.form input[type=password], .ui.form input[type=search], .ui.form input[type=tel], .ui.form input[type=text], .ui.form input[type=time], .ui.form input[type=url], .ui.formtextarea{background: #4a5560!important;}.ui.header .sub.header{color: white!important;}.ui.list .list>.item .header, .ui.list>.item .header{color: white!important;}.ui.list .list>.item .description, .ui.list>.item .description{color: white!important;}.profile .profile.info.rightpanel{background: #4a5560!important;}.forum .list .header a{color: white!important;}.forum .list .content .meta{color: white!important;}.forum i.lightning.icon{color: yellow!important}.ui.items>.item .meta>a:not(.ui){color: white!important;}.ui.raised.segment, .ui.raised.segments{box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.3)!important;}.forum.post .heading .content .metadata{color: white!important;}.forum .commentcount span{color: white!important;}.forum .commentcount i.icon{color: white!important;}.ui.secondary.pointing.menu .active.item, .ui.secondary.pointing.menu .active.item{color: #b72bf1!important}.sidebar aside .iconnavi{color: #b72bf1!important}.item{color: white!important}.ui.vertical.segment.footer{background-color: rgba(0,0,0,0)!important; color: white!important}.ui.raised.card{box-shadow: none!important}.ui.form textarea{background-color: #4a5560!important; color: white!important}.stream .ui.card.story .content.text .storybuttons button{color: #b72bf1!important}.ui.horizontal.bulleted.list>.item:before, ul.ui.horizontal.bulleted.list li:before{color: white!important}.profile .profile.info.leftpanel .profilicon{color: #b72bf1!important}.ui.selection.dropdown{background-color: #4a5560!important}.ui.form .field>label{color: white!important}.ui.dropdown .menu{background-color: #4a5560!important}.ui.menu .ui.dropdown .menu>.item>span{color: white!important}.ui.menu .ui.dropdown .menu>.item{color: white!important}.ui.menu .ui.dropdown .menu>.item>i{color: white!important}.ui.top.pointing.dropdown>.left.menu:after, .ui.top.right.pointing.dropdown>.menu:after{background-color: #4a5560!important}");
+    }
+
 });
 webview.addEventListener('did-navigate-in-page', (e) => {
     var win = remote.getCurrentWindow();
     var currentURL = e.url;
 
     var splitted = currentURL.split("/");
-    var thisnav = splitted[3];
 
     if(config.app_title == "default"){
         if(splitted[3] == "start"){
@@ -22,6 +26,7 @@ webview.addEventListener('did-navigate-in-page', (e) => {
             }, 500);
         }
         if(splitted[3] == "profile"){
+
             if(splitted[5] == "text"){
                 setTimeout(function(){
                     win.setTitle("DBNA - Profil > Fragebögen");
