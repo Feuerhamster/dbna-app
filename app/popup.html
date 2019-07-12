@@ -4,7 +4,6 @@ integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 crossorigin="anonymous"></script>
 
 <script src="index.js"></script>
-
 <html>
 
     <head>
@@ -70,8 +69,9 @@ if(args[0] == "url"){
     var webviewelement = document.getElementById("webview");
 
     webview.addEventListener('did-finish-load', (e) => {
-        webviewelement.insertCSS("#leaderboard{display:none!important}.contentad{display:none!important}.ad{display:none!important;}.ui.grid>.row{margin-top:10px!important;}.ui.attached.right.rail{display:none!important;}.ui.container.topbar .indicators .item{padding: 9px!important;}.ui.container.topbar .indicators{margin-right: 10px!important;}.ui.left.internal.rail, .ui.right.rail{display: none;}.ui.tiny.modal{margin:0!important}.ui.container.main, .ui.container.topbar{margin-right: 0px!important;width:100%}")
+        webviewelement.insertCSS("#leaderboard{display:none!important}.contentad{display:none!important}.ad{display:none!important;}.ui.grid>.row{margin-top:10px!important;}.ui.attached.right.rail{display:none!important;}.ui.container.topbar .indicators .item{padding: 9px!important;}.ui.container.topbar .indicators{margin-right: 10px!important;}.ui.left.internal.rail, .ui.right.rail{display: none;}.ui.tiny.modal{margin:0!important}.ui.container.main, .ui.container.topbar{margin-right: 0px!important;width:100%}");
     });
 
 }
+//win.openDevTools();
 </script>

@@ -4,26 +4,39 @@ const ccopy = require("copy-to-clipboard");
 var config = json.readFileSync(__dirname+'\\..\\config.json');
 var webviewelement = document.getElementById("webview");
 var statsdata = {set:false};
-window.loc = "test";
+
+var win = remote.getCurrentWindow();
+
+document.addEventListener("keydown", function(event){
+    if(event.keyCode == 73 && event.shiftKey && event.ctrlKey){
+        win.toggleDevTools();
+    }else if(event.keyCode == 82 && event.shiftKey && event.ctrlKey){
+        win.reload();
+    }else if(event.keyCode == 122){
+        if(config.fullscreen){
+            config.fullscreen = false;
+        }else{
+            config.fullscreen = true;
+        }
+        win.setFullScreen(config.fullscreen);
+    }
+});
+
 
 function windowClose(){
-    var window = remote.getCurrentWindow();
-    window.close();
+    win.close();
 }
 function windowMinimize(){
-    var window = remote.getCurrentWindow();
-    window.minimize();
+    win.minimize();
 }
 
 function windowMaximize(){
 
-    var window = remote.getCurrentWindow();
-
-    if(window.isMaximized() == false){
-        window.maximize();
+    if(win.isMaximized() == false){
+        win.maximize();
         document.getElementById("maximize_button").innerHTML = '<i class="far fa-window-restore"></i>';
     }else{
-        window.unmaximize();
+        win.unmaximize();
         document.getElementById("maximize_button").innerHTML = '<i class="far fa-square"></i>';
     }
 }
@@ -107,8 +120,7 @@ function stats(){
 
 
 function restore(){
-    var window = remote.getCurrentWindow();
-    window.restore();
+    win.restore();
 }
 
 

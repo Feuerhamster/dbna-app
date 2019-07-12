@@ -113,20 +113,6 @@ app.on('ready', () => {
 
     createWindow();
 
-    globalShortcut.register('CommandOrControl+d+i', () => {
-        win.openDevTools();
-    });
-    globalShortcut.register('CommandOrControl+d+r', () => {
-        win.reload();
-    });
-    globalShortcut.register('CommandOrControl+l', () => {
-        win.loadURL(url.format({
-            pathname: path.join(__dirname, 'app/security.html'),
-            protocol: 'file',
-            slashes: true
-        }));
-    });
-
 })
 
 // Listen for web contents being created
@@ -155,7 +141,5 @@ app.on('window-all-closed', ()=>{
 });
 
 app.on('will-quit', () => {
-    // Unregister all shortcuts.
-    globalShortcut.unregisterAll();
     rpc.destroy();
-  });
+});
