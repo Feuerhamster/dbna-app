@@ -9,16 +9,15 @@
 
 
 <center style="padding: 30px 150px 0px 150px;overflow-y:auto;max-height: calc(100% - 30px);">
+
     <h1 style="margin-bottom: 25px">Desktop-App Einstellungen</h1>
     
     <div class="panel">
         <h2 style="margin-bottom: 20px">Passwortsperre festlegen</h2>
-        <p>Hier kannst du die App mit einem von dir gewählten Passwort sichern. <br/>Es wird bei jedem Start der App abgefragt. So kann niemand eindringen! Mit <b>Strg+L</b> kannst du die App jederzeit sperren.<br/><br/>Wenn du das Passwort löschen möchtest, lasse das Feld einfach leer und speichere.</p>
+        <p>Hier kannst du die App mit einem von dir gewählten Passwort sichern. <br/>Es wird bei jedem Start der App abgefragt. So kann niemand eindringen! Mit <b>Strg+L</b> kannst du die App jederzeit sperren.<br/><br/></p>
         
-        <form id="pwform" style="margin-top: 15px;">
-            <input type="password" name="password" placeholder="Neues Passwort eingeben"></input>
-            <input id="pwsave" type="submit" class="button" value="Speichern" />
-        </form>
+        <input type="password" id="input-password" placeholder="Neues Passwort eingeben"></input>
+        <button class="button" onclick="resetPassword();" id="reset-pw-button">Aktuelles Passwort löschen</button>
 
     </div>
 
@@ -29,27 +28,22 @@
         
         <p>Möchtest du, das neue Fenster und/oder Popups in einem eigenen Fenster von DBNA geöffnet werden, oder dein Standartbrowser benutzt wird?</p>
         <br/><br/>
-        <form id="window_form">
-            <select name="option" id="windowSettings" style="width: 300px">
-                <option value="popup">Eigenes Fenster</option>
-                <option value="browser">Browser</option>
-            </select><br/>
-            <input type="submit" class="button" value="Speichern" id="popupsave" />
-        </form>
+        <select id="input-popup" style="width: 300px">
+            <option value="customWindow">Eigenes Fenster</option>
+            <option value="browser">Browser</option>
+        </select>
 
     </div>
 
     <br/><br/>
 
     <div class="panel">
-            <h2 style="margin-bottom: 20px">Startseite</h2>
-            
-            <p>Setze die Startseite, die du sehen möchtest, wenn du das Programm öffnest. Als Standart ist der Stream von DBNA eingestellt. Wenn du den Standart wiederherstellen möchtest, lasse das Feld einfach leer und speichere.</p>
-            <br/><br/>
-            <form id="home_form">
-                <input id="home_input" type="text" placeholder="Link zur gewünschten Startseite">
-                <input type="submit" class="button" value="Speichern" id="homesave" />
-            </form>
+
+        <h2 style="margin-bottom: 20px">Startseite</h2>
+        
+        <p>Setze die Startseite, die du sehen möchtest, wenn du das Programm öffnest. Als Standart ist der Stream von DBNA eingestellt. Wenn du den Standart wiederherstellen möchtest, lasse das Feld leer.</p>
+        <br/><br/>
+        <input id="input-home" type="text" placeholder="Link zur gewünschten Startseite">
     
     </div>
     
@@ -60,14 +54,10 @@
         
         <p>DBNA wird dir normalerweise mit hellen Farben angezeigt. Wenn du aber lieber dunklere Farben bevorzugst, kannst du das hier einstellen. Dies ist momentan noch eine experimentelle Funktion. Es kann zu design- und Farbfehlern kommen.</p>
         <br/><br/>
-        <form id="design_form">
-            <p style="display: inline-block"><label class="switch" style="float: left;">
-                <input type="checkbox" name="dark-mode" id="dark-mode">
-                <span class="slider round"></span>
-            </label><span style="float: left;margin-left: 10px;font-size: 18px;">Dunkles Design aktivieren</span></p><br/><br/>
-           
-            <input type="submit" class="button" value="Speichern" id="designsave" />
-        </form>
+        <p style="display: inline-block"><label class="switch" style="float: left;">
+            <input type="checkbox" id="input-dark">
+            <span class="slider round"></span>
+        </label><span style="float: left;margin-left: 10px;font-size: 18px;">Dunkles Design aktivieren</span></p><br/><br/>
 
     </div>
 
@@ -78,14 +68,10 @@
         
         <p>Wenn du möchtest, das DBNA in Discord als deine Aktivität angezeigt wird, aktiviere diese Funktion</p>
         <br/><br/>
-        <form id="rpc_form">
-            <p style="display: inline-block"><label class="switch" style="float: left;">
-                <input type="checkbox" name="rpc-switch" id="rpc-switch">
-                <span class="slider round"></span>
-            </label><span style="float: left;margin-left: 10px;font-size: 18px;">Rich Presence aktivieren</span></p><br/><br/>
-           
-            <input type="submit" class="button" value="Speichern" id="rpcsave" />
-        </form>
+        <p style="display: inline-block"><label class="switch" style="float: left;">
+            <input type="checkbox" id="input-rpc">
+            <span class="slider round"></span>
+        </label><span style="float: left;margin-left: 10px;font-size: 18px;">Rich Presence aktivieren</span></p><br/><br/>
 
     </div>
 
@@ -96,214 +82,142 @@
         
         <p>Wenn du eine Benachrichtigung oder eine Chatnachticht auf DBNA bekommst, wirst du automatisch eine Systembenachrichtigung bekommen.<br/>Verwalte hier die Einstellungen der Benachrichtigungen.</p>
         <br/><br/>
-        <form id="notify_form">
 
-            <p style="display: inline-block"><label class="switch" style="float: left;">
-                <input type="checkbox" name="general-notifications" id="general-notifications">
-                <span class="slider round"></span>
-            </label><span style="float: left;margin-left: 10px;font-size: 18px;">Ich möchte generell Desktop-Benachrichtigungen erhalten</span></p><br/><br/>
-           
+        <p style="display: inline-block"><label class="switch" style="float: left;">
+            <input type="checkbox" id="input-general-notifications">
+            <span class="slider round"></span>
+        </label><span style="float: left;margin-left: 10px;font-size: 18px;">Ich möchte generell Desktop-Benachrichtigungen erhalten</span></p><br/><br/>
+    
 
-            <p style="display: inline-block"><label class="switch" style="float: left;">
-                <input type="checkbox" name="push-notifications" id="push-notifications">
-                <span class="slider round"></span>
-            </label><span style="float: left;margin-left: 10px;font-size: 18px;">"Push-Benachrichtigungen" von DBNA erhalten</span></p><br/><br/>
+        <p style="display: inline-block"><label class="switch" style="float: left;">
+            <input type="checkbox" id="input-push-notifications">
+            <span class="slider round"></span>
+        </label><span style="float: left;margin-left: 10px;font-size: 18px;">"Push-Benachrichtigungen" von DBNA erhalten</span></p><br/><br/>
 
-            <p style="display: inline-block"><label class="switch" style="float: left;">
-                <input type="checkbox" name="chat-notifications" id="chat-notifications">
-                <span class="slider round"></span>
-            </label><span style="float: left;margin-left: 10px;font-size: 18px;">"Chat-Benachrichtigungen" von DBNA erhalten</span></p><br/><br/>
-
-            <input type="submit" class="button" value="Speichern" id="notifysave" />
-
-        </form>
+        <p style="display: inline-block"><label class="switch" style="float: left;">
+            <input type="checkbox" id="input-chat-notifications">
+            <span class="slider round"></span>
+        </label><span style="float: left;margin-left: 10px;font-size: 18px;">"Chat-Benachrichtigungen" von DBNA erhalten</span></p><br/><br/>
     
 
     </div>
 
+    <br/><br/>
 
-    <button class="button" onclick="settings();" style="margin-top: 35px;margin-bottom: 35px;">Zurück zu DBNA</button>
+    <div class="panel">
+        <h2 style="margin-bottom: 20px">Browserdaten Löschen</h2>
+        
+        <p>Leere den Cache und lösche alle Cookies. Eventuell musst du dich danach neu anmelden.</p>
+        <br/><br/>
+
+        <button class="button" onclick="clearBrowserData();" id="delete-browserdata-button">Browserdaten löschen</button>
+
+    </div>
+
+
+    <button class="button" onclick="loadSettingsPage();" style="margin-top: 35px;margin-bottom: 35px;">Zurück zu DBNA</button>
     <button class="button" onclick="win.reload();" style="margin-top: 35px;margin-bottom: 35px;">App neu laden</button>
 
 </center>
 
 <script>
-var cfgdata = json.readFileSync(__dirname+'\\..\\config.json');
-document.getElementById('windowSettings').value = cfgdata.windowSettings;
-document.getElementById("general-notifications").checked = cfgdata.msg.general;
-document.getElementById("push-notifications").checked = cfgdata.msg.push;
-document.getElementById("chat-notifications").checked = cfgdata.msg.chat;
-document.getElementById("dark-mode").checked = cfgdata.darkMode;
-document.getElementById("rpc-switch").checked = cfgdata.rpc;
+var cfgdata = jf.readFileSync(__dirname+"\\..\\config.json");
+$("#input-popup").val(cfgdata.popup)
+$("#input-general-notifications").attr("checked", cfgdata.msg.general);
+$("#input-push-notifications").attr("checked", cfgdata.msg.push);
+$("#input-chat-notifications").attr("checked", cfgdata.msg.chat);
+$("#input-dark").attr("checked", cfgdata.darkMode);
+$("#input-rpc").attr("checked", cfgdata.rpc);
 
-$("#pwform").submit(function(event){
-    event.preventDefault();
+$("#input-home").val(cfgdata.homepage);
 
-    var cfgdata = json.readFileSync(__dirname+'\\..\\config.json');
+if(cfgdata.password == false){
+    $("#reset-pw-button").css("display", "none");
+}
 
-    var formdata= $(this).serialize();
+$("#input-password").change(function(event){
     
-    formdata = formdata.split("=");
-    if(formdata[1]){
+    var sha256 = require('js-sha256');
+    var hash = sha256.create();
+    hash.update(event.target.value);
+    
+    cfgdata.password = hash.hex();
+    console.log(cfgdata.password);
+    saveSettings(cfgdata);
 
-        formdata = formdata[1];
+    $("#lockbutton").css("display", "block");
+    $("#reset-pw-button").css("display", "block");
 
-        var sha256 = require('js-sha256');
+});
 
-        var hash = sha256.create();
-        hash.update(formdata);
+$("#input-popup").change(function(event){
+    cfgdata.popup = event.target.value;
+    saveSettings(cfgdata);
+});
 
-        cfgdata.password =  hash.hex();
-        json.writeFile(__dirname+'\\..\\config.json',cfgdata,()=>{
-            
-            document.getElementById("pwsave").classList.add("success");
-            document.getElementById("pwsave").value = 'Gespeichert';
-            document.getElementById("lockbutton").style.display = 'block';
-            setTimeout(()=>{
-                document.getElementById("pwsave").classList.remove("success");
-                document.getElementById("pwsave").value = 'Speichern';
-            },2000);
+$("#input-home").change(function(event){
+    
+    var regex = /https\:\/\/(www\.)?dbna\.com.+/gi;
 
-        });
-
+    if(event.target.value.match(regex)){
+        cfgdata.homepage = event.target.value;
+        saveSettings(cfgdata);
     }else{
-        cfgdata.password =  false;
-        json.writeFile(__dirname+'\\..\\config.json',cfgdata,()=>{
-
-            document.getElementById("pwsave").classList.add("success");
-            document.getElementById("pwsave").value = 'Gespeichert';
-            setTimeout(()=>{
-                document.getElementById("pwsave").classList.remove("success");
-                document.getElementById("pwsave").value = 'Speichern';
-            },2000);
-        });
+        alert('Die Startseite muss eine Seite auf DBNA sein!\nZum Beispiel "https://dbna.com/forum" oder "https://www.dbna.com/"');
     }
     
 
 });
 
-$("#window_form").submit(function(event){
-    event.preventDefault();
 
-    var cfgdata = json.readFileSync(__dirname+'\\..\\config.json');
-
-    var formdata= $(this).serialize();
-    
-    formdata = formdata.split("=");
-
-        formdata = formdata[1];
-
-        cfgdata.windowSettings = formdata;
-
-        json.writeFile(__dirname+'\\..\\config.json',cfgdata,()=>{
-            
-            document.getElementById("popupsave").classList.add("success");
-            document.getElementById("popupsave").value = 'Gespeichert';
-            setTimeout(()=>{
-                document.getElementById("popupsave").classList.remove("success");
-                document.getElementById("popupsave").value = 'Speichern';
-            },2000);
-
-        });  
-
+$("#input-general-notifications").change(function(event){
+    cfgdata.msg.general = event.target.checked;
+    saveSettings(cfgdata);
+});
+$("#input-push-notifications").change(function(event){
+    cfgdata.msg.push = event.target.checked;
+    saveSettings(cfgdata);
+});
+$("#input-chat-notifications").change(function(event){
+    cfgdata.msg.chat = event.target.checked;
+    saveSettings(cfgdata);
 });
 
-$("#notify_form").submit(function(event){
-    event.preventDefault();
-
-    var cfgdata = json.readFileSync(__dirname+'\\..\\config.json');
-
-    cfgdata.msg.general = document.getElementById("general-notifications").checked;
-    cfgdata.msg.push = document.getElementById("push-notifications").checked;
-    cfgdata.msg.chat = document.getElementById("chat-notifications").checked;
-
-    json.writeFile(__dirname+'\\..\\config.json',cfgdata,()=>{
-        
-        document.getElementById("notifysave").classList.add("success");
-        document.getElementById("notifysave").value = 'Gespeichert';
-        setTimeout(()=>{
-            document.getElementById("notifysave").classList.remove("success");
-            document.getElementById("notifysave").value = 'Speichern';
-        },2000);
-
-    });  
-
+$("#input-dark").change(function(event){
+    cfgdata.darkMode = event.target.checked;
+    saveSettings(cfgdata);
 });
 
-$("#home_form").submit(function(event){
-    event.preventDefault();
-
-    var cfgdata = json.readFileSync(__dirname+'\\..\\config.json');
-
-    var formdata = document.getElementById("home_input").value;
-    if(formdata){
-
-        cfgdata.homepage =  formdata;
-        json.writeFile(__dirname+'\\..\\config.json',cfgdata,()=>{
-            
-            document.getElementById("homesave").classList.add("success");
-            document.getElementById("homesave").value = 'Gespeichert';
-            setTimeout(()=>{
-                document.getElementById("homesave").classList.remove("success");
-                document.getElementById("homesave").value = 'Speichern';
-            },2000);
-
-        });
-
-    }else{
-        cfgdata.homepage =  "https://www.dbna.com/";
-        json.writeFile(__dirname+'\\..\\config.json',cfgdata,()=>{
-
-            document.getElementById("homesave").classList.add("success");
-            document.getElementById("homesave").value = 'Gespeichert';
-            setTimeout(()=>{
-                document.getElementById("homesave").classList.remove("success");
-                document.getElementById("homesave").value = 'Speichern';
-            },2000);
-        });
-    }
-    
-
+$("#input-rpc").change(function(event){
+    cfgdata.rpc = event.target.checked;
+    saveSettings(cfgdata);
 });
 
-$("#design_form").submit(function(event){
-    event.preventDefault();
 
-    var cfgdata = json.readFileSync(__dirname+'\\..\\config.json');
+function saveSettings(newcfg){
+    jf.writeFileSync(__dirname+"\\..\\config.json", newcfg, { spaces: 4 });
+}
 
-    cfgdata.darkMode = document.getElementById("dark-mode").checked;
+function resetPassword(){
+    cfgdata.password = false;
+    saveSettings(cfgdata);
+    $("#lockbutton").css("display", "none");
+    $("#reset-pw-button").html("Passwort gelöscht!");
+    setTimeout(()=>{
+        $("#reset-pw-button").css("display", "none");
+    },2000);
+}
 
-    json.writeFile(__dirname+'\\..\\config.json',cfgdata,()=>{
-        
-        document.getElementById("designsave").classList.add("success");
-        document.getElementById("designsave").value = 'Gespeichert';
-        setTimeout(()=>{
-            document.getElementById("designsave").classList.remove("success");
-            document.getElementById("designsave").value = 'Speichern';
-        },2000);
-
-    });  
-
-});
-
-$("#rpc_form").submit(function(event){
-    event.preventDefault();
-
-    var cfgdata = json.readFileSync(__dirname+'\\..\\config.json');
-
-    cfgdata.rpc = document.getElementById("rpc-switch").checked;
-
-    json.writeFile(__dirname+'\\..\\config.json',cfgdata,()=>{
-        
-        document.getElementById("rpcsave").classList.add("success");
-        document.getElementById("rpcsave").value = 'Gespeichert';
-        setTimeout(()=>{
-            document.getElementById("rpcsave").classList.remove("success");
-            document.getElementById("rpcsave").value = 'Speichern';
-        },2000);
-
-    });  
-
-});
-
+function clearBrowserData(){
+    win.webContents.session.clearCache(function(){
+        console.log("[renderer] Session cache cleared");
+    });
+    win.webContents.session.clearStorageData(function(){
+        console.log("[renderer] Storage data cleared");
+    });
+    $("#delete-browserdata-button").html("Browserdaten gelöscht!");
+    setTimeout(()=>{
+        $("#delete-browserdata-button").html("Browserdaten löschen");
+    },2000);
+}
 </script>

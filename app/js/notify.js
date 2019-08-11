@@ -70,7 +70,6 @@ function wsconnection(){
                 
                 myNotification.onclick = function(){
                     restore();
-                    delete myNotification;
                 }
     
     

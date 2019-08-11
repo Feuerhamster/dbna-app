@@ -1,0 +1,46 @@
+.forum .categories .catlabel {
+    padding: 7px!important;
+}
+
+.forum .categories .catlabel > img {
+    display: none!important
+}
+
+.topbar {
+    box-shadow: 0px 0.6px 4px 1px rgba(50, 50, 50, 0.3)!important;
+}
+
+.ad {
+    display: none!important;
+}
+
+.ui.grid>.row {
+    margin-top: 10px!important;
+}
+
+.ui.attached.right.rail {
+    display: none!important;
+}
+
+.ui.container.topbar .indicators .item {
+    padding: 9px!important;
+}
+
+.ui.container.topbar .indicators {
+    margin-right: 10px!important;
+}
+
+.ui.left.internal.rail,
+.ui.right.rail {
+    display: none;
+}
+
+.ui.tiny.modal {
+    margin: 0!important
+}
+
+.ui.container.main,
+.ui.container.topbar {
+    margin-right: 0px!important;
+    width: 100%
+}

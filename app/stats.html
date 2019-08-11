@@ -9,15 +9,18 @@
 
 
 <center style="padding: 30px 150px 0px 150px;">
+
     <h1 style="margin-bottom: 15px">Deine Statistiken auf DBNA</h1>
+
     <h6 style="color: rgb(240,240,240);cursor: pointer; font-size: 14px;margin-bottom: 25px" onclick="reloadStats()"><i class="fas fa-sync" style="margin-right: 5px;"></i> Aktualisieren</h6>
+    
     <div class="panel">
         <h2 style="margin-bottom: 40px">Persönliche Statistiken</h2>
         
         
         <div style="display: inline-block; width: 30%">
             <p class="stats-item">
-                <span class="stats-stat" id="storys" style="color: #2ecc71">...</span><br/>
+                <span class="stats-stat" id="stories" style="color: #2ecc71">...</span><br/>
                 <span class="stats-title">Posts</span>
             </p>
     
@@ -27,7 +30,7 @@
             </p>
         </div>
         
-        <div style="display: inline-block; float:right; width: 33%">
+        <div style="display: inline-block; width: 33%">
             <p class="stats-item">
                 <span class="stats-stat" id="days" style="color: #2ecc71">...</span><br/>
                 <span class="stats-title">Tage auf DBNA</span>
@@ -38,7 +41,7 @@
                 <span class="stats-title">Öffentliche Bilder</span>
             </p>
         </div>
-        <div style="display: inline-block; float:right; width: 33%">
+        <div style="display: inline-block; width: 33%">
             <p class="stats-item">
                 <span class="stats-stat" id="friends" style="color: #2ecc71">...</span><br/>
                 <span class="stats-title">Freunde</span>
@@ -83,7 +86,7 @@
         
 
     </div>
-    <button class="button" onclick="stats();" style="margin-top: 25px;">Zurück zu DBNA</button>
+    <button class="button" onclick="loadStatsPage();" style="margin-top: 25px;">Zurück zu DBNA</button>
     
 
 </center>
@@ -96,7 +99,7 @@ function reloadStats(){
     $("#app_content").load(__dirname+"\\stats.html");
 }
 
-
+console.log(statsdata);
 
 if(statsdata.set){
 
@@ -115,7 +118,7 @@ if(statsdata.set){
     document.getElementById("dist").innerHTML = statsdata.dist;
     document.getElementById("completedist").innerHTML = statsdata.completedist;
 
-    document.getElementById("storys").innerHTML = statsdata.storys;
+    document.getElementById("stories").innerHTML = statsdata.stories;
     document.getElementById("forum").innerHTML = statsdata.forum;
 
 }else{
@@ -214,10 +217,10 @@ if(statsdata.set){
 
 
     function finish2(){
-    document.getElementById("storys").innerHTML = stories;
+    document.getElementById("stories").innerHTML = stories;
     document.getElementById("forum").innerHTML = forumposts;
 
-    statsdata.storys = stories;
+    statsdata.stories = stories;
     statsdata.forum = forumposts;
     }
 

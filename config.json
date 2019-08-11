@@ -1,1 +1,12 @@
-{"app_title":"default","app_icon":"favicon.ico","password":false,"windowSettings":"popup","msg":{"general":true,"push":true,"chat":true},"homepage":"https://www.dbna.com/","darkMode":false,"rpc":true}
+{
+    "password": false,
+    "popup": "customWindow",
+    "msg": {
+        "general": true,
+        "push": true,
+        "chat": true
+    },
+    "homepage": "https://www.dbna.com/start",
+    "darkMode": false,
+    "rpc": false
+}
