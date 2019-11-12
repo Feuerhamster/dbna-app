@@ -1,0 +1,30 @@
+<div class="app-content-window" style="justify-content: center;">
+
+    <div class="panel">
+
+        <h2>Mit deinem DBNA Account anmelden</h2>
+
+        <form id="login-form">
+
+            <div id="error-response"></div>
+
+            <input name="username" placeholder="Benutzername" type="text" />
+            <input name="password" placeholder="Passwort" type="password" />
+
+            <label>
+                Angemeldet bleiben?
+                <input type="checkbox" name="auto" value="1" />
+            </label>
+
+            <input name="submit" type="submit" value="Anmelden" class="button" />
+    
+        </form>
+
+        <h3 id="loader" style="display: none; align-items: center; flex-direction: column;">
+            <img src="#" style="max-height: 100px; display: block; margin-bottom: 20px;" />
+            Anmeldung läuft...
+        </h3>
+
+    </div>
+
+</div>

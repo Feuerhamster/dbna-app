@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <link rel="stylesheet" href="./css/style.css" />
+
+        <meta charset="utf-8">
+
+        <title>DBNA - Start</title>
+
+    </head>
+    <body>
+
+        <div id="pages">
+
+            <div v-show="pages.loader" id="pages-loader">
+                <div class="app-content-window" style="justify-content: center;">
+
+                    <h1 style="display: flex; align-items: center; flex-direction: column;">
+                        <img src="assets/dbna-logo-animated-4.gif" style="max-height: 100px; display: block; margin-bottom: 20px;" />
+                        Lade...
+                    </h1>
+                
+                </div>
+            </div>
+
+            <div v-show="pages.dbna" id="pages-dbna"></div>
+            <div v-show="pages.settings" id="pages-settings"></div>
+            <div v-show="pages.stats" id="pages-stats"></div>
+            <div v-show="pages.login" id="pages-login"></div>
+
+        </div>
+
+    </body>
+
+</html>
+
+<script src="js/index.js"></script>
+<script src="js/frontend.js"></script>

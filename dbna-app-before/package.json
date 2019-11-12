@@ -1,0 +1,30 @@
+{
+  "name": "dbna-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Feuerhamster/dbna-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Feuerhamster/dbna-app/issues"
+  },
+  "homepage": "https://github.com/Feuerhamster/dbna-app#readme",
+  "dependencies": {
+    "copy-to-clipboard": "^3.2.0",
+    "custom-electron-titlebar": "^3.1.0",
+    "discord-rpc": "^3.0.2",
+    "electron": "^6.0.1",
+    "electron-packager": "^14.0.4",
+    "js-sha256": "^0.9.0",
+    "jsonfile": "^5.0.0",
+    "opn": "^6.0.0"
+  }
+}

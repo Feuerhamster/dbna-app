@@ -1,0 +1,12 @@
+{
+    "password": false,
+    "popup": "customWindow",
+    "msg": {
+        "general": true,
+        "push": true,
+        "chat": true
+    },
+    "homepage": "https://www.dbna.com/start",
+    "darkMode": true,
+    "rpc": false
+}

@@ -1,0 +1,155 @@
+<style>
+body{
+    background: linear-gradient(45deg, #0cbcf1 0, #8a0ebd 100%);
+}
+.titlebar{
+    background: rgba(0,0,0,0)!important;
+}
+
+input[type="checkbox"]{
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+  left: 0;
+  top: 5px;
+}
+.custom-checkbox{
+  display: inline-block;
+  position: relative;
+  padding-left: 25px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 17.0px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-family: sans-serif;
+  color: rgb(255, 255, 255);
+  font-family: 'Open Sans', sans-serif;
+}
+.custom-checkbox:hover > .custom-checkbox-checkmark{
+  background-color: rgb(220,225,227);
+}
+.custom-checkbox-checkmark{
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  background-color: rgba(230,235,237, 0.5);
+  border-radius: 2px;
+  transition: all 0.15s;
+  -webkit-transition: all 0.15s;
+}
+.custom-checkbox>input[type="checkbox"]:checked + .custom-checkbox-checkmark {
+  background-color: #00afe3;
+  transition: all 0.15s;
+  -webkit-transition: all 0.15s;
+}
+.custom-checkbox-checkmark:after{
+  content: "";
+  position: absolute;
+  display: none;
+}
+.custom-checkbox>input[type="checkbox"]:checked + .custom-checkbox-checkmark:after{
+  display: block;
+  transition: all 0.15s;
+  -webkit-transition: all 0.15s;
+  border: solid white;
+  border-width: 0px 3px 3px 0px;
+  transform: rotate(45deg);
+  height: 10px;
+  width: 5px;
+  top: 2px;
+  left: 6px;
+}
+</style>
+
+<center style="padding-top: 18%;">
+
+    <div class="panel" style="width: 40%">
+
+        <h2>Mit deinem DBNA Account anmelden</h2>
+
+        <br/><div id="response"></div><br/>
+
+        <form id="login">
+
+            <input name="username" type="text" placeholder="Benutzername" />
+            <input name="password" type="password" placeholder="Passwort" />
+            <label>
+                Angemeldet bleiben?
+                <input type="checkbox" name="auto" value="1" />
+              </label><br/><br/>
+            <input name="submit" type="submit" value="Anmelden" class="button" />
+
+        </form>
+
+        <h3 id="loader" style="display: none">
+          <img src="assets/dbna-logo-animated-4.gif" style="max-height: 100px; display: block; margin-bottom: 20px;" />
+        Anmeldung läuft...
+      </h3><br/>
+
+    </div>
+
+</center>
+
+<script>
+$("#login").submit(function(event){
+
+    $("#login").css("display", "none");
+    $("#loader").css("display", "block");
+
+    event.preventDefault();
+
+    $.ajax({
+        type: 'POST',
+        url: 'https://www.dbna.com/json/user/login/',
+        data: $(this).serialize(),
+        success: function(data){
+
+            
+
+            setTimeout(()=>{
+                $("#dbna_content").load("./web.html");
+                $("#left-controls").css("display", "block");
+            },500);
+
+
+        },
+        error: function(xhr, options, thrownError){
+
+            var data = JSON.parse(xhr.responseText);
+            $("#response").html('<span class="err-msg">'+data.error.msg+'</span>');
+            $("#login").css("display", "block");
+            $("#loader").css("display", "none");
+
+        }
+
+    });
+
+    $('#login')[0].reset();
+
+});
+
+$('label').each(function(){
+  
+  //get the current label element
+  var $this = $(this);
+  
+  if($this.children('input[type="checkbox"]').length){
+
+    //Check if is a switch or not
+    if($this.children('input[type="checkbox"]').hasClass('switch')){
+       $this.addClass('custom-checkbox-switch');
+      $this.children('input[type="checkbox"]').after('<span class="custom-checkbox-switch-indicator"></span>');
+    }else{
+      $this.addClass('custom-checkbox');
+      $this.children('input[type="checkbox"]').after('<span class="custom-checkbox-checkmark"></span>');
+    }
+    
+  }
+  
+});
+
+</script>

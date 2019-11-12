@@ -1,0 +1,314 @@
+<style>
+body{
+    background: linear-gradient(45deg, #0cbcf1 0, #8a0ebd 100%);
+}
+.titlebar{
+    background: rgba(0,0,0,0)!important;
+}
+</style>
+
+
+<center style="padding: 30px 150px 0px 150px;">
+
+    <h1 style="margin-bottom: 15px">Deine Statistiken auf DBNA</h1>
+
+    <h6 style="color: rgb(240,240,240);cursor: pointer; font-size: 14px;margin-bottom: 25px" onclick="reloadStats()"><i class="fas fa-sync" style="margin-right: 5px;"></i> Aktualisieren</h6>
+    
+    <div class="panel">
+        <h2 style="margin-bottom: 40px">Persönliche Statistiken</h2>
+        
+        
+        <div style="display: inline-block; width: 30%">
+            <p class="stats-item">
+                <span class="stats-stat" id="stories" style="color: #2ecc71">...</span><br/>
+                <span class="stats-title">Posts</span>
+            </p>
+    
+            <p class="stats-item">
+                <span class="stats-stat" id="forum" style="color: #2ecc71">...</span><br/>
+                <span class="stats-title">Öffentliche Fragen</span>
+            </p>
+        </div>
+        
+        <div style="display: inline-block; width: 33%">
+            <p class="stats-item">
+                <span class="stats-stat" id="days" style="color: #2ecc71">...</span><br/>
+                <span class="stats-title">Tage auf DBNA</span>
+            </p>
+    
+            <p class="stats-item">
+                <span class="stats-stat" id="pics" style="color: #2ecc71">...</span><br/>
+                <span class="stats-title">Öffentliche Bilder</span>
+            </p>
+        </div>
+        <div style="display: inline-block; width: 33%">
+            <p class="stats-item">
+                <span class="stats-stat" id="friends" style="color: #2ecc71">...</span><br/>
+                <span class="stats-title">Freunde</span>
+            </p>
+    
+            <p class="stats-item">
+                <span class="stats-stat" id="groups" style="color: #2ecc71">...</span><br/>
+                <span class="stats-title">Gruppen</span>
+            </p>
+        </div>
+        
+
+    </div>
+
+    <br/><br/>
+
+    <div class="panel" >
+        <h2 style="margin-bottom: 0px">Besucheranalyse</h2>
+        
+        <div style="display: inline-block">
+            <p class="stats-item">
+                <span class="stats-stat" id="ages" style="color: #FFC312">...</span><br/>
+                <span class="stats-title">Durchschnittliches Alter</span>
+            </p>
+    
+            <p class="stats-item">
+                <span class="stats-stat" id="completeages" style="color: #f39c12">...</span><br/>
+                <span class="stats-title"> Durchschnittliches Alter (ungerundet)</span>
+            </p>
+        </div>
+        <div style="display: block; float:right; width: 50%">
+            <p class="stats-item">
+                <span class="stats-stat" id="dist" style="color: #FFC312">...</span><br/>
+                <span class="stats-title">Durchschnittliche Entfernung</span>
+            </p>
+    
+            <p class="stats-item">
+                <span class="stats-stat" id="completedist" style="color: #f39c12">...</span><br/>
+                <span class="stats-title">Durchschnittliche Entfernung (ungerundet)</span>
+            </p>
+        </div>
+        
+
+    </div>
+    <button class="button" onclick="loadStatsPage();" style="margin-top: 25px;">Zurück zu DBNA</button>
+    
+
+</center>
+
+<script>
+
+function reloadStats(){
+    statsdata = {}
+    statsdata.set = false;
+    $("#app_content").load("./stats.html");
+}
+
+console.log(statsdata);
+
+if(statsdata.set){
+
+    document.getElementById("days").innerHTML = statsdata.days;
+
+    document.getElementById("groups").innerHTML = statsdata.groups;
+
+    document.getElementById("friends").innerHTML = statsdata.friends;
+
+    document.getElementById("pics").innerHTML = statsdata.pics;
+
+
+    document.getElementById("ages").innerHTML = statsdata.ages ;
+    document.getElementById("completeages").innerHTML = statsdata.completeages;
+
+    document.getElementById("dist").innerHTML = statsdata.dist;
+    document.getElementById("completedist").innerHTML = statsdata.completedist;
+
+    document.getElementById("stories").innerHTML = statsdata.stories;
+    document.getElementById("forum").innerHTML = statsdata.forum;
+
+}else{
+
+
+    var allvisitors = []
+    var countusers = 0;
+    var ages = 0;
+    var distances = 0;
+
+    statsdata.set = true;
+
+    var allposts = []
+    var stories = 0;
+    var forumposts = 0;
+
+    function finish(){
+
+    //alter
+    var agecounter = ages/countusers;
+    var agecounter = Math.round(agecounter);
+    var agecounter = String(agecounter);
+
+    var completeagecounter = ages/countusers;
+    var completeagecounter = String(completeagecounter);
+    var completeagecounter = completeagecounter.substring(0,12);
+
+    document.getElementById("ages").innerHTML = agecounter ;
+    document.getElementById("completeages").innerHTML = completeagecounter;
+
+    statsdata.ages = agecounter;
+    statsdata.completeages = completeagecounter;
+
+    //distanzen
+
+    var distcounter = distances/countusers;
+    var distcounter = Math.round(distcounter);
+    var distcounter = String(distcounter);
+
+    var completedistcounter = distances/countusers;
+    var completedistcounter = String(completedistcounter);
+    var completedistcounter = completedistcounter.substring(0,12);
+
+    document.getElementById("dist").innerHTML = distcounter + " km";
+    document.getElementById("completedist").innerHTML = completedistcounter;
+
+    statsdata.dist = distcounter + " km";
+    statsdata.completedist = completedistcounter + " km";
+
+    }
+
+
+    function visitors_requester(page){
+    $.ajax({
+        type: 'GET',
+        url: 'https://www.dbna.com/json/user/visitors?page='+page,
+        data: "",
+        success: function(data){
+            //console.log(data);
+            allvisitors.push(data);
+            if(data.more == true){
+                visitors_requester(page+1);
+            }else{
+
+                var itemsProcessed = 0;
+                
+                allvisitors.forEach(elements => {
+                    
+                    for (var propety in elements.results) {
+                    
+                        var thisuser = elements.results[propety].user
+                        countusers += 1;
+                        if(thisuser.age != undefined){
+                            ages += thisuser.age;
+                        }
+                        if(thisuser.dist != undefined){
+                            distances += thisuser.dist;
+                        }
+                        
+
+                    }
+
+                    itemsProcessed++;
+                    if(itemsProcessed === allvisitors.length) {
+                        finish();
+                    }
+
+                });
+
+            }
+        }
+
+    });
+    }
+    visitors_requester(0);
+
+
+    function finish2(){
+    document.getElementById("stories").innerHTML = stories;
+    document.getElementById("forum").innerHTML = forumposts;
+
+    statsdata.stories = stories;
+    statsdata.forum = forumposts;
+    }
+
+    function posts_requester(page){
+    $.ajax({
+        type: 'GET',
+        url: 'https://www.dbna.com/json/pulse/me?before='+page,
+        data: "",
+        success: function(data){
+
+            allposts.push(data);
+            //console.log(allposts);
+            //console.log(allposts[allposts.length -1].stories[allposts[allposts.length -1].stories.length -1].date);
+            if(data.more == true){
+                posts_requester(allposts[allposts.length -1].stories[allposts[allposts.length -1].stories.length -1].date);
+            }else{
+
+                var itemsProcessed2 = 0;
+                
+                allposts.forEach(elements => {
+                    for (var i=0;i < elements.stories.length; i++) {
+                    
+                        var thipost = elements.stories[i]
+                        
+                        if(thipost.type == "story"){
+                            stories += 1;
+                        }
+                        if(thipost.type == "forum"){
+                            forumposts += 1;
+                        }
+                        
+
+                    }
+
+                    itemsProcessed2++;
+                    if(itemsProcessed2 === allposts.length) {
+                        finish2();
+                    }
+
+                });
+
+            }
+        }
+
+    });
+    }
+    posts_requester();
+
+
+
+    $.ajax({
+    type: 'GET',
+    url: 'https://www.dbna.com/json/profile/me?gallery=1',
+    data: "",
+    success: function(data){
+
+        var mydata = data.profile;
+
+        var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+
+        var firstDate = mydata.signupDate;
+        firstDate = firstDate.split("T");
+
+        firstDate = firstDate[0].split("-")
+
+        firstDate = new Date(firstDate[0],firstDate[1],firstDate[2]);
+
+        var secondDate = new Date();
+
+
+        var diffDays = Math.round((secondDate.getTime() - firstDate.getTime())/(oneDay));
+        document.getElementById("days").innerHTML = diffDays;
+
+        document.getElementById("groups").innerHTML = mydata.groups.count;
+
+        document.getElementById("friends").innerHTML = mydata.friends.count;
+
+        document.getElementById("pics").innerHTML = data.publicPictures;
+
+        statsdata.days = diffDays;
+        statsdata.groups = mydata.groups.count;
+        statsdata.friends = mydata.friends.count;
+        statsdata.pics = data.publicPictures;
+
+    }
+
+    });
+
+}
+
+</script>
