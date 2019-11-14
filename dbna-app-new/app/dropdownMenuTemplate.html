@@ -1,17 +1,17 @@
 <div id="titlebar-left-controls" v-show="showLeftControls">
 
-    <button class="ui-btn" onclick="webviewFunctions.back();" title="Seite zurück">
+    <button class="ui-btn" v-on:click="webviewBack" title="Seite zurück">
         <i class="fas fa-arrow-left"></i>
     </button>
-    <button class="ui-btn" onclick="webviewFunctions.forward();" title="Seite vor">
+    <button class="ui-btn" v-on:click="webviewForward" title="Seite vor">
         <i class="fas fa-arrow-right"></i>
     </button>
 
-    <button class="ui-btn" onclick="webviewFunctions.reload();" title="Neu laden">
+    <button class="ui-btn" v-on:click="webviewReload" title="Neu laden">
         <i class="fas fa-sync"></i>
     </button>
 
-    <button class="ui-btn" onclick="webviewFunctions.loadLink(config.homepage);" title="Startseite">
+    <button class="ui-btn" v-on:click="navigateHome" title="Startseite">
         <i class="fas fa-home"></i>
     </button>
 
@@ -21,9 +21,9 @@
 
         <ul>
             <li style="padding: 7px 10px 7px 10px!important">
-                <input placeholder="Link laden" type="text" style="display: block;margin:0px;width:100%" id="url-field"/>
+                <input placeholder="DBNA Link laden" type="text" style="display: block; margin:0px; width:100%" @keyup.enter="loadLink"/>
             </li>
-            <li onclick="webviewFunctions.share()" id="share-btn">
+            <li v-on:click="copyUrl" id="share-btn">
                 <i class="fas fa-share-alt"></i> Link kopieren
             </li>
             <li onclick="window.location.href='locked.html';" id="lockbutton">

@@ -1,4 +1,4 @@
-var webviewelement = document.getElementById("dbna-webview");
+webviewelement = document.getElementById("dbna-webview");
 webviewelement.src = config.homepage;
 
 webviewelement.addEventListener('did-finish-load', (e) => {

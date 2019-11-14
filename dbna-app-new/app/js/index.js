@@ -7,8 +7,10 @@ const opn = require("opn");
 const $ = require("jquery");
 const customTitlebar = require('custom-electron-titlebar');
 
+//init required variables
 var config = jf.readFileSync(__dirname+'\\..\\config.json');
 var statsdata = { set: false };
+var webviewelement = null;
 
 //get this window
 var win = remote.getCurrentWindow();
