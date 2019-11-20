@@ -1,0 +1,8 @@
+function dbnaUrlParser(url){
+    var pathArray = URL.parse(url).path.split("/");
+    return {
+        page: pathArray[1],
+        subPage: pathArray[1] ? pathArray[1] : false,
+        full: pathArray,
+    }
+}

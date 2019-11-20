@@ -3,7 +3,7 @@ vueTitlebar = null;
 
 Vue.component("panel", {
     template: `
-    <div class="panel bottom-space" v-show="visible">
+    <div class="panel bottom-space" v-show="visible" style="width: 100%">
         <h2 style="margin-bottom: 20px">{{ title }}</h2>
         <slot></slot>
     </div>
@@ -12,6 +12,77 @@ Vue.component("panel", {
         "title", "visible"
     ]
 });
+
+Vue.component("settings-component", {
+    template: fs.readFileSync(__dirname + "\\pages\\settings\\settings-component-template.html").toString(),
+    data(){
+        return {
+            settingsGroups: {
+                general: true,
+                behavior: false,
+                messages: false,
+                infos: false
+            }
+        }
+    },
+    methods: {
+        showSettingsGroup: function(group){
+            
+            switch(group){
+
+                case "general":
+                    this.settingsGroups = {
+                        general: true,
+                        behavior: false,
+                        messages: false,
+                        infos: false
+                    }
+                    break;
+
+                case "behavior":
+                    this.settingsGroups = {
+                        general: false,
+                        behavior: true,
+                        messages: false,
+                        infos: false
+                    }
+                    break;
+
+                case "messages":
+                    this.settingsGroups = {
+                        general: false,
+                        behavior: false,
+                        messages: true,
+                        infos: false
+                    }
+                    break;
+
+                case "infos":
+                    this.settingsGroups = {
+                        general: false,
+                        behavior: false,
+                        messages: false,
+                        infos: true
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+
+        },
+        reloadApp: function(){
+            win.reload();
+        },
+        navigateBack: function(){
+            pages.pages.settings = false;
+            pages.pages.stats = false;
+            pages.pages.dbna = true;
+        }
+    }
+});
+
+
 
 var vueTitlebar = new Vue({
     el: "#titlebar-left-controls",
@@ -100,4 +171,4 @@ var pages = new Vue({
             settings: false
         }
     }
-})
+});

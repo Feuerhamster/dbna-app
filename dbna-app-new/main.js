@@ -1,5 +1,5 @@
 //import all packages
-const {app, BrowserWindow, webContents, session } = require("electron");
+const {app, BrowserWindow, webContents, session, Tray, Menu } = require("electron");
 const path = require("path");
 const url = require("url");
 const opn = require('opn');
@@ -7,8 +7,10 @@ const json = require("jsonfile");
 
 //read config
 var config = json.readFileSync(__dirname+'\\config.json');
+
 //set window variable
 let win;
+let tray = null;
 
 //create discord rpc
 if(config.rpc){
@@ -106,7 +108,7 @@ function createWindow(){
 }
 
 function createPopupWindow(addr){
-    pwin = new BrowserWindow({width:980, height: 750,icon: 'favicon.ico', frame: false, webPreferences: { nodeIntegration: true, webviewTag: true }});
+    pwin = new BrowserWindow({width:980, height: 750,icon: 'favicon.ico', backgroundColor: "#11b6e9", frame: false, webPreferences: { nodeIntegration: true, webviewTag: true }});
 
     
     pwin.loadURL(__dirname+'\\app\\popup.html?url='+addr);
@@ -125,6 +127,13 @@ app.setAppUserModelId(process.execPath);
 app.on('ready', () => {
 
     createWindow();
+
+    tray = new Tray("icon.png");
+    const contextMenu = Menu.buildFromTemplate([
+        { label: 'Beenden', type: 'normal', click: ()=>{ console.log("clicked") } },
+      ])
+      tray.setToolTip('DBNA')
+      tray.setContextMenu(contextMenu)
 
     //ad blocker
     session.defaultSession.webRequest.onBeforeRequest({urls: ['*://*./*']}, function(details, callback) {
@@ -174,6 +183,9 @@ app.on('window-all-closed', ()=>{
 app.on('will-quit', () => {
     if(rpc){
         rpc.destroy();
+    }
+    if(tray){
+        tray.destroy();
     }
 });
 
