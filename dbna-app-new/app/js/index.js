@@ -1,5 +1,5 @@
 //import modules
-const {remote} = require('electron');
+const {remote, ipcRenderer} = require('electron');
 const jf = require("jsonfile");
 const ccopy = require("copy-to-clipboard");
 const fs = require("fs");
@@ -42,7 +42,6 @@ document.addEventListener("keydown", function(event){
 
 
 //check if user is logged in or not
-
 $.ajax({
     type: 'GET',
     url: 'https://www.dbna.com/json/profile/me',
@@ -59,14 +58,18 @@ $.ajax({
     error: function(xhr, options, thrownError){
 
         if(xhr.status == 401){
-            vueTitlebar.showLeftControls = false;
-            pages.pages = {
-                loader: false,
-                dbna: false,
-                login: true,
-                stats: false,
-                settings: false
-            }
+            setTimeout(()=>{
+
+                vueTitlebar.showLeftControls = false;
+                pages.pages = {
+                    loader: false,
+                    dbna: false,
+                    login: true,
+                    stats: false,
+                    settings: false
+                }
+
+            }, 500);
         }
 
     }

@@ -12,13 +12,15 @@ $("#login-form").submit(function(event){
         type: 'POST',
         url: 'https://www.dbna.com/json/user/login/',
         data: $(this).serialize(),
-        success: function(data){
+        success: function(data, status, xhr){
 
             setTimeout(()=>{
                 pages.pages.login = false;
                 pages.pages.loader = true;
                 webviewelement.reload();
             },1000);
+
+            ipcRenderer.send("dbna-successful-login", true);
 
         },
         error: function(xhr, options, thrownError){

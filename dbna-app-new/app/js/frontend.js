@@ -125,8 +125,11 @@ var vueTitlebar = new Vue({
         webviewReload: function(){
             webviewelement.reload();
         },
+        webviewDevTools: function(){
+            webviewelement.openDevTools();
+        },
         navigateHome: function(){
-            
+            webviewelement.loadURL(config.homepage);
         },
         loadLink: function(event){
 

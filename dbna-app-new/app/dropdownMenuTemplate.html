@@ -29,7 +29,7 @@
             <li onclick="window.location.href='locked.html';" id="lockbutton">
                 <i class="fas fa-lock"></i> Sperren
             </li>
-            <li>
+            <li v-on:click="webviewDevTools">
                 <i class="fas fa-code"></i> Dev-Tools
             </li>
             <li v-on:click="showStats">

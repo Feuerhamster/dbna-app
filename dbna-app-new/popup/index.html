@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <link rel="stylesheet" href="../app/css/style.css" />
+
+        <meta charset="utf-8">
+
+        <title>DBNA - Popup</title>
+
+    </head>
+    <body>
+
+        <div id="url-field-wrapper" style="padding: 37px 7px 7px 7px; position: relative; width: 100%;z-index: 999;box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.1); background: linear-gradient(45deg, #0ba4d3 -27px, #6d0b94 97%);">
+            <input type="text" @keyup.enter="loadLink" style="width: 100%; margin: 0px;" :value="urlValue" />
+        </div>
+
+        <webview id="popup-webview" allowpopups plugins disablewebsecurity style="height: calc(100% - 77px);">
+        </webview>
+
+    </body>
+
+</html>
+
+<script src="index.js"></script>

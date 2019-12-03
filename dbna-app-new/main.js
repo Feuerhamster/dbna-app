@@ -1,5 +1,5 @@
 //import all packages
-const {app, BrowserWindow, webContents, session, Tray, Menu } = require("electron");
+const {app, BrowserWindow, webContents, session, Tray, Menu, Notification, nativeImage, ipcMain } = require("electron");
 const path = require("path");
 const url = require("url");
 const opn = require('opn');
@@ -12,77 +12,9 @@ var config = json.readFileSync(__dirname+'\\config.json');
 let win;
 let tray = null;
 
-//create discord rpc
-if(config.rpc){
-    const { Client } = require('discord-rpc');
-    const clientId = '591707687121846292';
-    
-    const rpc = new Client({ transport: 'ipc' });
-    
-    rpc.on('ready', () => {
-    
-        const startTimestamp = new Date();
-
-        setInterval(()=>{
-    
-            var title = win.getTitle();
-            var regex = /DBNA - (.\w+)/gi;
-            var match = regex.exec(title);
-            
-            var text = "Wartet...";
-    
-            if(match && match[0] && match[1]){
-                if(match[1] == "Start"){
-                    text = "Liest den Stream";
-        
-                }else if(match[1] == "Profil"){
-                    text = "Schaut sich Profile an";
-        
-                }else if(match[1] == "Fotos"){
-                    text = "Schaut sich Fotos an";
-        
-                }else if(match[1] == "Gruppen"){
-                    text = "Besucht eine Gruppe";
-        
-                }else if(match[1] == "Jungs"){
-                    text = "Sucht nach Jungs";
-        
-                }else if(match[1] == "Forum"){
-                    text = "Hält sich im Forum auf";
-    
-                }else{
-                    text = "Liest etwas";
-                }
-
-                rpc.setActivity({
-                    details: text,
-                    startTimestamp,
-                    largeImageKey: 'dbna_logo',
-                    largeImageText: 'DBNA',
-                    instance: false,
-                });
-            }
-    
-        },15000);
-
-        rpc.setActivity({
-            details: "Ist gerade online gegangen",
-            startTimestamp,
-            largeImageKey: 'dbna_logo',
-            largeImageText: 'DBNA',
-            instance: false,
-        });
-
-        win.webContents.executeJavaScript("console.log('[mainProcess] Discord RPC ready');");
-
-    });
-
-    rpc.login({ clientId: clientId }).catch(console.error);
-}
-
 //create window function
 function createWindow(){
-    win = new BrowserWindow({width:1240, height: 820,icon: 'favicon.ico', frame: false, webPreferences: {nodeIntegration: true, webviewTag: true}});
+    win = new BrowserWindow({width:1240, height: 820, icon: 'favicon.ico', backgroundColor: '#ccc', frame: false, webPreferences: {nodeIntegration: true, webviewTag: true}});
 
     if(config.password){
         win.loadURL(url.format({
@@ -108,10 +40,10 @@ function createWindow(){
 }
 
 function createPopupWindow(addr){
-    pwin = new BrowserWindow({width:980, height: 750,icon: 'favicon.ico', backgroundColor: "#11b6e9", frame: false, webPreferences: { nodeIntegration: true, webviewTag: true }});
+    pwin = new BrowserWindow({width: 1000, height: 720,icon: 'favicon.ico', backgroundColor: "#11b6e9", frame: false, webPreferences: { nodeIntegration: true, webviewTag: true }});
 
     
-    pwin.loadURL(__dirname+'\\app\\popup.html?url='+addr);
+    pwin.loadURL(__dirname+'\\popup\\index.html?url=' + encodeURIComponent(addr));
     
     pwin.setMenu(null);
 
@@ -119,6 +51,17 @@ function createPopupWindow(addr){
         win = null;
     });
 }
+
+
+ipcMain.on('dbna-successful-login', (event, args) => {
+    if(args){
+        session.defaultSession.cookies.get({}, (error, cookies) => {
+            var cdsess = cookies.find(value => value.name == "cdsess");
+            console.log(cdsess.value);
+        });
+    }
+});
+
 
 //set app user model id for
 app.setAppUserModelId(process.execPath);
@@ -128,20 +71,22 @@ app.on('ready', () => {
 
     createWindow();
 
-    tray = new Tray("icon.png");
+    var icon = nativeImage.createFromPath(__dirname + "\\trayicon.png");
+    tray = new Tray(icon);
+
     const contextMenu = Menu.buildFromTemplate([
-        { label: 'Beenden', type: 'normal', click: ()=>{ console.log("clicked") } },
-      ])
-      tray.setToolTip('DBNA')
-      tray.setContextMenu(contextMenu)
+        { label: 'Beenden', type: 'normal', click: ()=>{ app.quit(); } },
+    ]);
+    tray.setToolTip('DBNA');
+    tray.setContextMenu(contextMenu);
 
     //ad blocker
     session.defaultSession.webRequest.onBeforeRequest({urls: ['*://*./*']}, function(details, callback) {
-            
-        var test_url = details.url;
-        var check_block_list =/\w+\.adnxs\.[a-z0-9]{1,3}|\w+\.dpd\.[a-z0-9]{1,3}|\w+\.adition\.[a-z0-9]{1,3}|\w+\.3lift\.[a-z0-9]{1,3}|\w+\.doubleclick\.[a-z0-9]{1,3}|\w+\.nativendo\.[a-z0-9]{1,3}|adservice\.google\.[a-z0-9]{1,3}/gi
-        var block_me = check_block_list.test(test_url);
-        if(block_me){
+        
+        var blockList =/\w+\.adnxs\.[a-z0-9]{1,3}|\w+\.dpd\.[a-z0-9]{1,3}|\w+\.adition\.[a-z0-9]{1,3}|\w+\.3lift\.[a-z0-9]{1,3}|\w+\.doubleclick\.[a-z0-9]{1,3}|\w+\.nativendo\.[a-z0-9]{1,3}|adservice\.google\.[a-z0-9]{1,3}|\w+\.smartadserver\.[a-z0-9]{1,3}|\w+\.amazon-adsystem\.[a-z0-9]{1,3}|\w+\.yieldlab\.[a-z0-9]{1,3}|\w+\.adtech\.[a-z0-9]{1,3}|\w+\.advertising\.[a-z0-9]{1,3}|\w+\.mookie1\.[a-z0-9]{1,3}/gi
+        var res = blockList.test(details.url);
+
+        if(res){
             callback({cancel: true});
 
         }else{
@@ -154,7 +99,6 @@ app.on('ready', () => {
 
 // Listen for web contents being created
 app.on('web-contents-created', (e, contents) => {
-
     // Check for a webview
     if (contents.getType() == 'webview') {
   
@@ -168,10 +112,10 @@ app.on('web-contents-created', (e, contents) => {
             }else{
                 opn(url);
             }
+        });
 
-      });
     }
-  });
+});
 
 app.on('window-all-closed', ()=>{
     if(process.platform !== 'darwin'){
