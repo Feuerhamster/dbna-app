@@ -4,7 +4,7 @@
     "msg": {
         "general": true,
         "push": true,
-        "chat": true
+        "chat": false
     },
     "homepage": "https://www.dbna.com/start",
     "darkMode": true,

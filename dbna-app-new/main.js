@@ -4,6 +4,7 @@ const path = require("path");
 const url = require("url");
 const opn = require('opn');
 const json = require("jsonfile");
+const notificationManager = require("./notificationManager/client.js");
 
 //read config
 var config = json.readFileSync(__dirname+'\\config.json');
@@ -57,7 +58,7 @@ ipcMain.on('dbna-successful-login', (event, args) => {
     if(args){
         session.defaultSession.cookies.get({}, (error, cookies) => {
             var cdsess = cookies.find(value => value.name == "cdsess");
-            console.log(cdsess.value);
+            notificationManager(cdsess.value, config);
         });
     }
 });
